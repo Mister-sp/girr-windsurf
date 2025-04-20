@@ -4,11 +4,11 @@
     <main class="flex-1 flex flex-col items-center py-8 space-y-8">
       <div class="w-full max-w-2xl">
         <Card
-          v-for="show in shows"
-          :key="show.id"
-          :title="show.name"
-          :image="show.image"
-          :to="`/shows/${show.id}`"
+          v-for="show in (shows as any[])"
+          :key="(show as any).id"
+          :title="(show as any).name"
+          :image="(show as any).image"
+          :to="`/shows/${(show as any).id}`"
           class="mb-6"
         />
       </div>
@@ -19,30 +19,35 @@
   </div>
 </template>
 
-<script setup lang="ts">
-import { onMounted } from 'vue';
+<script lang="ts">
+import Vue from 'vue';
 import Header from '../components/common/Header.vue';
 import Card from '../components/common/Card.vue';
 import Loader from '../components/common/Loader.vue';
 import { useShowsStore } from '../store';
 import { storeToRefs } from 'pinia';
 
-interface Show {
-  id: string;
-  name: string;
-  image?: string;
-  // Ajoute d'autres propriétés si besoin
-}
-
-const store = useShowsStore();
-const { shows, loading, error } = storeToRefs(store);
-
-onMounted(() => {
-  if (!shows.value.length) {
-    store.fetchShows();
+export default Vue.extend({
+  components: { Header, Card, Loader },
+  computed: {
+    ...storeToRefs(useShowsStore()),
+    shows(): any[] {
+      return (this as any).shows || [];
+    },
+    loading(): boolean {
+      return (this as any).loading || false;
+    },
+    error(): string | null {
+      return (this as any).error || null;
+    }
+  },
+  mounted() {
+    if (!this.shows.length) {
+      this.$store.fetchShows && this.$store.fetchShows();
+    }
   }
 });
 </script>
-
+</script>
 <style scoped>
 </style>
