@@ -1,4 +1,13 @@
-# GIRR Windsurf (Frontend)
+# GIRR Windsurf
+
+## TODO / Roadmap
+
+- Titrage personnalisable (choix de la police, couleur, position)
+- Effets d'apparition/disparition (glitch, fondu, etc.)
+- Vue XSplit flexible (séparer titre et média en 2 pages ou non)
+- Aperçu XSplit dans l'éditeur des sujets/émissions
+- Travail full cloud (édition et utilisation 100% en ligne)
+ (Frontend)
 
 Ce projet est la refonte moderne du frontend de GIRR, basé sur Vue 3, TypeScript, Pinia, Vue Router et TailwindCSS.
 
